@@ -56,10 +56,10 @@ class LoginView(View):
         data = json.loads(request.body)
 
         try:
-            user = User.objects.get(email=data["email"])
-
             if not User.objects.filter(email=data["email"]).exists():
                 return JsonResponse({"message": "INVALID_USER"}, status=401)
+
+            user = User.objects.get(email=data["email"])
 
             if not bcrypt.checkpw(
                 data["password"].encode("utf-8"), user.password.encode("utf-8")
@@ -102,6 +102,9 @@ class LoginView(View):
 
         except KeyError:
             return JsonResponse({"message": "KEY_ERROR"}, status=400)
+
+        except User.DoesNotExist:
+            return JsonResponse({"message": "USER_DOES_NOT_EXIST"}, status=404)
 
 
 class SendEmailView(View):

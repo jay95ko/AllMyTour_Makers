@@ -61,6 +61,17 @@ class Sns(models.Model):
         db_table = "sns"
 
 
+class DraftSns(models.Model):
+    kind = models.CharField(max_length=45, null=True, blank=True)
+    address = models.CharField(max_length=500, null=True, blank=True)
+    maker = models.ForeignKey(
+        "DraftMaker", on_delete=models.CASCADE, null=True, blank=True
+    )
+
+    class Meta:
+        db_table = "draftsns"
+
+
 class Evidence(models.Model):
     kind = models.CharField(max_length=45, null=True, blank=True)
     image = models.ImageField(upload_to="evidence/", null=True, blank=True)
@@ -73,7 +84,9 @@ class Evidence(models.Model):
 class DraftEvidence(models.Model):
     kind = models.CharField(max_length=45, null=True, blank=True)
     image = models.ImageField(upload_to="evidence/", null=True, blank=True)
-    maker = models.ForeignKey("Maker", on_delete=models.CASCADE, null=True, blank=True)
+    maker = models.ForeignKey(
+        "DraftMaker", on_delete=models.CASCADE, null=True, blank=True
+    )
 
     class Meta:
         db_table = "draftevidences"
