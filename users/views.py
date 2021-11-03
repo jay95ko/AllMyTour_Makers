@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from .models import User
 from .decorator import login_decorator
 from my_settings import SECRET_KEY, ALGORITHM
+from .decorator import login_decorator
 
 
 class SignUpView(View):
@@ -218,7 +219,7 @@ class MypageView(View):
             "password": user.password,
             "is_maker": user.is_maker,
             "agree_service": user.agree_service,
-            "agree_maketing": user.agree_marketing,
+            "agree_maketing": user.agree_maketing,
         }
 
         return JsonResponse({"Result": result}, status=200)
